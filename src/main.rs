@@ -3,7 +3,7 @@ use std::collections::HashMap;
 fn recursion(n: u32) -> u32 {
     match n {
         0 | 1 => 1,
-        _ => recursion(n-1) + recursion(n-2)
+        _ => recursion(n - 1) + recursion(n - 2),
     }
 }
 
@@ -13,14 +13,16 @@ struct DP {
 
 impl DP {
     fn new() -> Self {
-        Self{cache: HashMap::from([(0, 1), (1, 1)])}
+        Self {
+            cache: HashMap::from([(0, 1), (1, 1)]),
+        }
     }
 
     fn nth_fib(&mut self, n: u32) -> u32 {
         match self.cache.get(&n) {
             Some(n) => *n,
             None => {
-                let retval = self.nth_fib(n-1) + self.nth_fib(n-2);
+                let retval = self.nth_fib(n - 1) + self.nth_fib(n - 2);
                 self.cache.insert(n, retval);
                 retval
             }
