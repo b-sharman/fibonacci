@@ -24,7 +24,7 @@ fn main() {
         println!("{}: {}", i, recursion(i));
     }
 
-    let mut cache: HashMap<u32, u32> = HashMap::new();
+    let mut cache = HashMap::new();
     cache.insert(0, 1);
     cache.insert(1, 1);
     println!("\ndp:");
