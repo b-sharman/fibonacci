@@ -7,13 +7,23 @@ fn recursion(n: u32) -> u32 {
     }
 }
 
-fn dp(cache: &mut HashMap<u32, u32>, n: u32) -> u32 {
-    match cache.get(&n) {
-        Some(x) => *x,
-        None => {
-            let retval = dp(cache, n-1) + dp(cache, n-2);
-            cache.insert(n, retval);
-            retval
+struct DP {
+    cache: HashMap<u32, u32>,
+}
+
+impl DP {
+    fn new() -> Self {
+        Self{cache: HashMap::from([(0, 1), (1, 1)])}
+    }
+
+    fn nth_fib(&mut self, n: u32) -> u32 {
+        match self.cache.get(&n) {
+            Some(n) => *n,
+            None => {
+                let retval = self.nth_fib(n-1) + self.nth_fib(n-2);
+                self.cache.insert(n, retval);
+                retval
+            }
         }
     }
 }
@@ -24,11 +34,9 @@ fn main() {
         println!("{}: {}", i, recursion(i));
     }
 
-    let mut cache = HashMap::new();
-    cache.insert(0, 1);
-    cache.insert(1, 1);
+    let mut dp = DP::new();
     println!("\ndp:");
     for i in 0..40 {
-        println!("{}: {}", i, dp(&mut cache, i));
+        println!("{}: {}", i, dp.nth_fib(i));
     }
 }
